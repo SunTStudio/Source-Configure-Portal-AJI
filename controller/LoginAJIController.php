@@ -110,24 +110,33 @@ class LoginAJIController extends Controller
             }
 
             // Ambil data roles dan permissions dari request
-            $roles = $request->input('allRole');
-            $permissions = $request->input('allPermission');
+        $allRole = $request->input('allRole');
+        $allPermission = $request->input('allPermission');
+        // Bersihkan semua data role yang ada
+        Role::query()->delete();
 
-            // Bersihkan semua data role yang ada
-            Role::query()->delete();
+        // Bersihkan semua data permission yang ada
+        Permission::query()->delete();
 
-            // Bersihkan semua data permission yang ada
-            Permission::query()->delete();
+        foreach ($allPermission as $permissionData) {
+                Permission::firstOrCreate(['name' => $permissionData['name']]);
+        }
 
-            // Update roles
-            foreach ($roles as $roleData) {
-                Role::create($roleData);
+        foreach ($allRole as $roleData) {
+            $newRole = Role::firstOrCreate([
+                'name' => $roleData['name'],
+            ]);
+
+            $permissions = [];
+            foreach ($roleData['permissions'] as $permissionData) {
+                $NewPermissions = Permission::firstOrCreate([
+                    'name' => $permissionData['name'],
+                ]);
+                $permissions[] = $NewPermissions['name'];
             }
-
-            // Update permissions
-            foreach ($permissions as $permissionData) {
-                Permission::create($permissionData);
-            }
+            // Sync permissions
+            $newRole->givePermissionTo($permissions);
+        }
 
             // Mengupdate model User
             foreach ($request->input('users') as $userData) {
