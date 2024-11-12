@@ -70,7 +70,7 @@ class LoginAJIController extends Controller
             // Mengupdate model Department
             foreach ($request->input('departments') as $deptData) {
                 department::updateOrCreate(
-                    ['id' => $deptData['id']], // Sesuaikan dengan kolom unik
+                    ['code' => $deptData['code']], // Sesuaikan dengan kolom unik
                     [
                         'code' => $deptData['code'],
                         'name' => $deptData['name'],
@@ -85,7 +85,7 @@ class LoginAJIController extends Controller
             // Mengupdate model Detail_departement
             foreach ($request->input('detail_departments') as $detailDeptData) {
                 detail_departement::updateOrCreate(
-                    ['id' => $detailDeptData['id']], // Sesuaikan dengan kolom unik
+                    ['code' => $detailDeptData['code']], // Sesuaikan dengan kolom unik
                     [
                         'departement_id' => $detailDeptData['departement_id'],
                         'name' => $detailDeptData['name'],
@@ -101,7 +101,7 @@ class LoginAJIController extends Controller
             // Mengupdate model Position
             foreach ($request->input('positions') as $positionData) {
                 position::updateOrCreate(
-                    ['id' => $positionData['id']], // Sesuaikan dengan kolom unik
+                    ['code' => $positionData['code']], // Sesuaikan dengan kolom unik
                     [
                         'position' => $positionData['position'],
                         'code' => $positionData['code'],
