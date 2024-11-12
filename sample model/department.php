@@ -11,8 +11,8 @@ class department extends Model
     protected $guarded = [
         'id'
     ];
-    public function detail() {
-        return $this->belongsTo(detail_departement::class, 'departement_id');
+    public function departement() {
+        return $this->HasMany(detail_departement::class, 'departement_id');
     }
 
     public function user() {

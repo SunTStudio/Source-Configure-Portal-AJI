@@ -64,7 +64,7 @@ class User extends Authenticatable
         return $this->hasMany(team_member::class, 'user_id');
     }
 
-    public function department() {
+    public function departement() {
         return $this->belongsTo(department::class, 'dept_id');
     }
 
