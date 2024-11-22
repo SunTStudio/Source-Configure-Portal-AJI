@@ -42,14 +42,14 @@ class User extends Authenticatable
 
 
     public function departement() {
-        return $this->belongsTo(department::class, 'dept_id');
+        return $this->belongsTo(Department::class, 'dept_id');
     }
 
-    public function detail() {
-        return $this->belongsTo(detail_departement::class, 'detail_dept_id');
+    public function detailDepartment() {
+        return $this->belongsTo(Detail_departement::class, 'detail_dept_id');
     }
 
     public function position() {
-        return $this->belongsTo(position::class, 'position_id');
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }

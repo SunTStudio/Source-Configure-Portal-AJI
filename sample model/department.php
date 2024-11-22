@@ -12,7 +12,7 @@ class department extends Model
         'id'
     ];
     public function departement() {
-        return $this->HasMany(detail_departement::class, 'departement_id');
+        return $this->HasMany(Detail_departements::class, 'departement_id');
     }
 
     public function user() {

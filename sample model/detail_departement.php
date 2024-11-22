@@ -12,7 +12,7 @@ class detail_departement extends Model
         'id'
     ];
     public function departement() {
-        return $this->belongsTo(department::class, 'departement_id');
+        return $this->belongsTo(Departments::class, 'departement_id');
     }
 
     public function user() {
