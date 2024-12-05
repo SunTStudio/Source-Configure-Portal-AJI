@@ -10,6 +10,8 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -112,11 +114,19 @@ class LoginAJIController extends Controller
             // Ambil data roles dan permissions dari request
         $allRole = $request->input('allRole');
         $allPermission = $request->input('allPermission');
-        // Bersihkan semua data role yang ada
-        Role::query()->delete();
+        // Nonaktifkan foreign key constraints
+        Schema::disableForeignKeyConstraints();
 
-        // Bersihkan semua data permission yang ada
-        Permission::query()->delete();
+        // Bersihkan tabel roles dan permissions
+        Role::truncate();
+        Permission::truncate();
+
+        // Bersihkan tabel pivot terkait
+        DB::table('model_has_roles')->truncate();
+        DB::table('model_has_permissions')->truncate();
+
+        // Aktifkan kembali foreign key constraints
+        Schema::enableForeignKeyConstraints();
 
         foreach ($allPermission as $permissionData) {
                 Permission::firstOrCreate(['name' => $permissionData['name']]);
